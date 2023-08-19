@@ -1,0 +1,41 @@
+# Christopher Ku
+# 11 - 14 - 2022
+# CSE 374 Homework 4 - Part 3
+# Script to aggergate measured word counts of each downloaded C file to an output file
+
+#!/bin/bash
+if [ $# -lt 2 ]; then
+    echo "Usage: urllist outputfilename [inputfilename ...]" 1>&2
+    exit 1
+fi
+
+if [ ! -f $2 ]; then
+    echo "Error: provided input file doesn't exist" 1>&2
+    exit 1
+fi
+
+output="$1"
+urls="$2"
+
+if [ -f $1 ]; then
+    echo "Replacing $output" 1>&2
+    rm "$output"
+fi
+
+touch "$output"
+
+# Iterate through contents of downloaded C files and run measurepage script on them to get
+# the total word count of each file and write it as an indexed list to an output file
+index=1
+while read line; do
+    echo "Performing word count measurement on $line"
+    words=$( ./measurepage "$line" )
+    if [[ $words -gt 0 ]]; then
+        echo "$index $words" >> "$output"
+        index=$(( index + 1 ))
+        echo "...successful"
+    else
+        echo "...failure"
+    fi
+done < "$urls"  
+exit 0

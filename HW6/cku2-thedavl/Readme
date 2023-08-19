@@ -1,0 +1,66 @@
+CSE 374 Assignment 6 - Memory Manager
+
+David Lee (netid: thedavl), Christopher Ku (netid: cku2)
+
+How work was split:
+
+David: Makefile, getmem.c, freemem.c
+Chris: bench.c, testing notes.
+
+Our memory manager implements the getmem and freemem functions that act similarly to the c malloc and free frunctions. 
+
+Our manager revolves around the maintenance of a freelist linked-list structure, which contains nodes representing chunks of free memory. As getmem is called, more chunks (nodes) of memory are fetched from the underlying system with malloc, or split from existing chunks in freelist. When memory is freed using freemem, it is added back to freelist and combined with adjacent blocks of memory. 
+
+An important helper function used (and defined in mem_impl.h, mem_utils.c) is insertnode, which inserts a node in the correct slot of freelist. This is used in both getmem and freemem.
+
+Running bench with default values:
+10000 trials, 50% getmem calls.
+Total CPU time in seconds:  0.000080
+Total storage acquired in bytes: 110400
+Total number of free blocks: 7
+Average number of free blocks in bytes: 10928
+
+Total CPU time in seconds:  0.000150
+Total storage acquired in bytes: 110400
+Total number of free blocks: 7
+Average number of free blocks in bytes: 14560
+
+Total CPU time in seconds:  0.000238
+Total storage acquired in bytes: 234480
+Total number of free blocks: 12
+Average number of free blocks in bytes: 11814
+
+Total CPU time in seconds:  0.000334
+Total storage acquired in bytes: 273088
+Total number of free blocks: 15
+Average number of free blocks in bytes: 18115
+
+Total CPU time in seconds:  0.000428
+Total storage acquired in bytes: 273088
+Total number of free blocks: 15
+Average number of free blocks in bytes: 13600
+
+Total CPU time in seconds:  0.000526
+Total storage acquired in bytes: 289792
+Total number of free blocks: 18
+Average number of free blocks in bytes: 13472
+
+Total CPU time in seconds:  0.000619
+Total storage acquired in bytes: 309792
+Total number of free blocks: 8
+Average number of free blocks in bytes: 9754
+
+Total CPU time in seconds:  0.000721
+Total storage acquired in bytes: 309792
+Total number of free blocks: 7
+Average number of free blocks in bytes: 14617
+
+Total CPU time in seconds:  0.000822
+Total storage acquired in bytes: 421536
+Total number of free blocks: 18
+Average number of free blocks in bytes: 9941
+
+Total CPU time in seconds:  0.000929
+Total storage acquired in bytes: 421536
+Total number of free blocks: 10
+Average number of free blocks in bytes: 13046

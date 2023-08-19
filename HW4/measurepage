@@ -1,0 +1,22 @@
+# Christopher Ku
+# 11 - 14 - 2022
+# CSE 374 Homework 4 - Part 2
+# Script to download C files and measure the word count of each file
+
+#!/bin/bash
+if [ $# != 1 ]; then
+    echo "Usage: measurepage [urltofile]" 1>&2
+    exit 1
+fi
+
+# Downloading files from URL and getting the word count of
+# each file using the wordcount C file
+url="$1"
+filename=$(basename "$url")
+wget -q "$url"
+if [ $? -ne 0 ]; then
+    echo "0"
+    exit 0
+fi
+./wordcount -w "$filename"
+exit 0
